@@ -233,26 +233,28 @@ def simplex_core(A, c, x, basic, answ=None,b1=None,flu=0):
                 if r_q < 0:
                     optimum = False
                     break    
-        if flu==1:
-            #print("space")
-            a2=[(c[q] - prices @ A[:, q], q) for q in N]
-            na2=[0]*n
-            for u in a2:
-                na2[u[1]]=u[0]
-                
-            a1=-prices@b1
-            a3=B_inv@b1
-            a4=B_inv@A
-            las_tab=[]
-            las_tab.append([a1]+na2)
+        
             
             
-            for u in range(len(a3)):
-                las_tab.append([a3[u]]+list(a4[u]))
-            answ["final_tableau"]=las_tab    
+               
                 
 
         if optimum:
+            if flu==1:
+            #print("space")
+                a2=[(c[q] - prices @ A[:, q], q) for q in N]
+                na2=[0]*n
+                for u in a2:
+                    na2[u[1]]=u[0]
+                
+                a1=-prices@b1
+                a3=B_inv@b1
+                a4=B_inv@A
+                las_tab=[]
+                las_tab.append([a1]+na2)
+                for u in range(len(a3)):
+                    las_tab.append([a3[u]]+list(a4[u]))
+                answ["final_tableau"]=las_tab 
             #print("\tfound optimum")
             return 0, x, set(B), z, None, it  # Found optimal solution
     
